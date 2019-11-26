@@ -10,11 +10,13 @@ jobs:
     name: job1
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v1
       - name: 'PR review'
         run: 'echo "this was triggered from a PR review"'
         shell: pwsh
       - name: 'Create internal branch'
         # todo: if comment == 'lgtm' && branch is from fork
-        uses: ./../actions/create-internal-branch
+        uses: ./actions/create-internal-branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
