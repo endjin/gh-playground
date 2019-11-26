@@ -15,6 +15,6 @@ jobs:
         shell: pwsh
       - name: 'Create internal branch'
         # todo: if comment == 'lgtm' && branch is from fork
-        uses: ./actions/create-internal-branch
+        uses: ./../actions/create-internal-branch
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
