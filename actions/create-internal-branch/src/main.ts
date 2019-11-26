@@ -7,7 +7,7 @@ export async function run() {
 
     const octokit = new github.GitHub(token);
 
-    let ownerAndRepoName = <string>process.env.GITHUB_REPO;
+    let ownerAndRepoName = <string>process.env.GITHUB_REPOSITORY;
     let repoSplits = splitWithRemainder(ownerAndRepoName, "/", 1);
     let owner = repoSplits[0];
     let repo = repoSplits[1];

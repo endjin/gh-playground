@@ -1726,7 +1726,7 @@ function run() {
         try {
             const token = process.env.GITHUB_TOKEN;
             const octokit = new github.GitHub(token);
-            let ownerAndRepoName = process.env.GITHUB_REPO;
+            let ownerAndRepoName = process.env.GITHUB_REPOSITORY;
             let repoSplits = splitWithRemainder(ownerAndRepoName, "/", 1);
             let owner = repoSplits[0];
             let repo = repoSplits[1];
