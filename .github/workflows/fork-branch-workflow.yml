@@ -1,0 +1,15 @@
+name: Fork branch workflow
+
+on:
+  push:
+    branches:    
+      - 'forks/**'
+
+jobs:
+  job1:
+    name: job1
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'PR review'
+        run: 'echo "this was triggered from a push"'
+        shell: pwsh

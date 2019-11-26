@@ -1,0 +1,5 @@
+name: 'Create internal branch'
+description: 'todo'
+runs:
+  using: 'node12'
+  main: 'dist/index.js'
