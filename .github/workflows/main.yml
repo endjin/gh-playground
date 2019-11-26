@@ -1,0 +1,14 @@
+name: PR test
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  job1:
+    name: job1
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Say hello'
+        run: 'echo "hello"'
+        shell: pwsh
