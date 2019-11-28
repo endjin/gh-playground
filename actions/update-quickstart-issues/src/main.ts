@@ -32,11 +32,11 @@ export function run() {
     }
 
     let issuesFile = path.join(wd, "ISSUES.md");
-    let issueLine = `- [${issueSummary}](${issueUrl})`;
+    let issueLine = `[${issueSummary}](${issueUrl})`;
 
     if (issueAction == "opened") {
       core.info("Adding issue to issues file...");
-      fs.appendFileSync(issuesFile, "\n");
+      fs.appendFileSync(issuesFile, "\n- ");
       fs.appendFileSync(issuesFile, issueLine);
     } else if (issueAction == "closed") {
       core.info("Adding strikethrough to issue in issues file...");
