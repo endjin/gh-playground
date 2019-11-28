@@ -11,6 +11,9 @@ jobs:
   comment:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v1
+        
       - name: 'Update quickstart issues'
         uses: ./actions/update-quickstart-issues
         with:
