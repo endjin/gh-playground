@@ -103,7 +103,7 @@ function run() {
         let issueUrl = core.getInput('issue_url');
         let issueAction = core.getInput('issue_action');
         if (!["opened", "closed", "reopened"].includes(issueAction)) {
-            throw "Unsupported issue action";
+            throw new Error("Unsupported issue action");
         }
         core.info("Parsing issue title...");
         let parsedIssueTitle = functions_1.parseIssueTitle(issueTitle);
@@ -115,7 +115,7 @@ function run() {
         let wd = path.join(workspacePath, bundleDir);
         let porterManifest = path.join(wd, "porter.yaml");
         if (!fs.existsSync(porterManifest)) {
-            throw `No bundle found at: ${bundleDir} `;
+            throw new Error(`No bundle found at: ${bundleDir}`);
         }
         let issuesFile = path.join(wd, "ISSUES.md");
         let issueLine = `- [${issueSummary}](${issueUrl})`;

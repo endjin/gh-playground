@@ -11,7 +11,7 @@ export function run() {
     let issueAction = <string>core.getInput('issue_action');
 
     if (!["opened", "closed", "reopened"].includes(issueAction)) {
-      throw "Unsupported issue action"
+      throw new Error("Unsupported issue action");
     }
 
     core.info("Parsing issue title...");
@@ -28,7 +28,7 @@ export function run() {
     let porterManifest = path.join(wd, "porter.yaml");
 
     if (!fs.existsSync(porterManifest)){
-      throw `No bundle found at: ${bundleDir} `
+      throw new Error(`No bundle found at: ${bundleDir}`);
     }
 
     let issuesFile = path.join(wd, "ISSUES.md");
