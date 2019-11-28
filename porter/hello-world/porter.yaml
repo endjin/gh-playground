@@ -1,0 +1,17 @@
+name: hello-world
+description: A hello world bundle
+version: 0.1.0
+invocationImage: cnabquickstarts.azurecr.io/hello-world/bundle:0.1.0
+
+mixins:
+  - exec
+
+install:
+  - exec:
+      command: echo hello
+      description: Install
+
+uninstall:
+  - exec:
+      command: echo goodbye
+      description: Uninstall

@@ -22,6 +22,15 @@ jobs:
           issue_url: ${{ github.event.issue.html_url }}
           issue_action: ${{ github.event.action }}
 
+      - name: Combine readme fragments
+        uses: endjin/CNAB.Quickstarts.GitHub.Actions/combine-readme-fragments@v1
+        with:
+          manifest_path: ${{ steps.update_quickstart_issues.outputs.quickstart_solution_path }}/porter.yaml
+          instructions_path: ${{ steps.update_quickstart_issues.outputs.quickstart_solution_path }}/INSTRUCTIONS.md
+          deployment_path: ${{ steps.update_quickstart_issues.outputs.quickstart_solution_path }}/DEPLOYMENT.md
+          issues_path: ${{ steps.update_quickstart_issues.outputs.quickstart_solution_path }}/ISSUES.md
+          output_path: ${{ steps.update_quickstart_issues.outputs.quickstart_solution_path }}/README.md
+
       - name: Commit & push readme and issues
         uses: endjin/CNAB.Quickstarts.GitHub.Actions/git-commit-updates@v1
         with:

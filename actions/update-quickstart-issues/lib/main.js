@@ -40,15 +40,15 @@ function run() {
         }
         else if (issueAction == "closed") {
             core.info("Adding strikethrough to issue in issues file...");
-            let contents = fs.readFileSync(issuesFile, "utf8");
-            contents = contents.replace(issueLine, `~~${issueLine}~~`);
-            fs.writeFileSync(issuesFile, contents);
+            let issuesContents = fs.readFileSync(issuesFile, "utf8");
+            issuesContents = issuesContents.replace(issueLine, `~~${issueLine}~~`);
+            fs.writeFileSync(issuesFile, issuesContents);
         }
         else if (issueAction == "reopened") {
             core.info("Removing strikethrough from issue in issues file...");
-            let contents = fs.readFileSync(issuesFile, "utf8");
-            contents = contents.replace(`~~${issueLine}~~`, issueLine);
-            fs.writeFileSync(issuesFile, contents);
+            let issuesContents = fs.readFileSync(issuesFile, "utf8");
+            issuesContents = issuesContents.replace(`~~${issueLine}~~`, issueLine);
+            fs.writeFileSync(issuesFile, issuesContents);
         }
         core.setOutput("quickstart_solution_path", bundleDir);
     }
