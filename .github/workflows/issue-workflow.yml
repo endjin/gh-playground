@@ -1,0 +1,28 @@
+name: Issue workflow
+
+on:
+  issues:
+    types:
+      - opened
+      - closed
+      - reopened
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Update quickstart issues'
+        uses: ./actions/update-quickstart-issues
+        with:
+          issue_title: ${{ github.event.issue.title }}
+          issue_url: ${{ github.event.issue.html_url }}
+          issue_action: ${{ github.event.action }}
+
+      - name: Commit & push readme and issues
+        uses: endjin/CNAB.Quickstarts.GitHub.Actions/git-commit-updates@v1
+        with:
+          add_path_spec: '.'
+          commit_message: "Update readme for bundle '${{ steps.parse_issue.outputs.quickstart_solution_path }}' with issue"
+          branch: master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
