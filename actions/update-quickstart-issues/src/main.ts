@@ -1,6 +1,7 @@
 import * as core from '@actions/core';
 import * as fs from 'fs';
 import * as path from 'path';
+import { parseIssueTitle } from './functions';
 
 export async function run() {
   try {
@@ -15,16 +16,9 @@ export async function run() {
 
     core.info("Parsing issue title...");
 
-    let issueTitleRegex = new RegExp('(?<=\[)(.*?)(?=\])] (.*)');
-
-    if (!issueTitleRegex.test(issueTitle)) {
-      throw "Issue title was not in a valid format"
-    }
-
-    let matches = [...issueTitle.matchAll(issueTitleRegex)];
-
-    let bundleDir = matches[0].values[0];
-    let issueSummary = matches[1].values[0];
+    let parsedIssueTitle = parseIssueTitle(issueTitle);
+    let bundleDir = parsedIssueTitle.bundleDir;
+    let issueSummary = parsedIssueTitle.issueSummary;
 
     core.info("Bundle directory is: " + bundleDir);
     core.info("Issue summary is: " + issueSummary);

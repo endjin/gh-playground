@@ -50,6 +50,36 @@ module.exports = require("os");
 
 /***/ }),
 
+/***/ 102:
+/***/ (function(__unusedmodule, exports) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+function parseIssueTitle(issueTitle) {
+    // Example input:
+    // [porter/hello-world] An issue
+    //
+    // Groups:
+    // 1: porter/hello-world
+    // 2: An issue
+    let issueTitleRegex = /(?<=\[)(.*?)(?=\])] (.*)/;
+    let result = issueTitle.match(issueTitleRegex);
+    if (result == null) {
+        throw "Issue title was not in a valid format";
+    }
+    let bundleDir = result[1];
+    let issueSummary = result[2];
+    return {
+        bundleDir: bundleDir,
+        issueSummary: issueSummary
+    };
+}
+exports.parseIssueTitle = parseIssueTitle;
+
+
+/***/ }),
+
 /***/ 198:
 /***/ (function(__unusedmodule, exports, __webpack_require__) {
 
@@ -75,6 +105,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(__webpack_require__(470));
 const fs = __importStar(__webpack_require__(747));
 const path = __importStar(__webpack_require__(622));
+const functions_1 = __webpack_require__(102);
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -85,13 +116,9 @@ function run() {
                 throw "Unsupported issue action";
             }
             core.info("Parsing issue title...");
-            let issueTitleRegex = new RegExp('(?<=\[)(.*?)(?=\])] (.*)');
-            if (!issueTitleRegex.test(issueTitle)) {
-                throw "Issue title was not in a valid format";
-            }
-            let matches = [...issueTitle.matchAll(issueTitleRegex)];
-            let bundleDir = matches[0].values[0];
-            let issueSummary = matches[1].values[0];
+            let parsedIssueTitle = functions_1.parseIssueTitle(issueTitle);
+            let bundleDir = parsedIssueTitle.bundleDir;
+            let issueSummary = parsedIssueTitle.issueSummary;
             core.info("Bundle directory is: " + bundleDir);
             core.info("Issue summary is: " + issueSummary);
             let workspacePath = process.env.GITHUB_WORKSPACE;

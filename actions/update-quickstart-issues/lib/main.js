@@ -19,6 +19,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const core = __importStar(require("@actions/core"));
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
+const functions_1 = require("./functions");
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -29,13 +30,9 @@ function run() {
                 throw "Unsupported issue action";
             }
             core.info("Parsing issue title...");
-            let issueTitleRegex = new RegExp('(?<=\[)(.*?)(?=\])] (.*)');
-            if (!issueTitleRegex.test(issueTitle)) {
-                throw "Issue title was not in a valid format";
-            }
-            let matches = [...issueTitle.matchAll(issueTitleRegex)];
-            let bundleDir = matches[0].values[0];
-            let issueSummary = matches[1].values[0];
+            let parsedIssueTitle = functions_1.parseIssueTitle(issueTitle);
+            let bundleDir = parsedIssueTitle.bundleDir;
+            let issueSummary = parsedIssueTitle.issueSummary;
             core.info("Bundle directory is: " + bundleDir);
             core.info("Issue summary is: " + issueSummary);
             let workspacePath = process.env.GITHUB_WORKSPACE;
