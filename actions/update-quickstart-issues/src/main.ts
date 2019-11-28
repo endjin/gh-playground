@@ -13,6 +13,8 @@ export async function run() {
       throw "Unsupported issue action"
     }
 
+    core.info("Parsing issue title...");
+
     let issueTitleRegex = new RegExp('(?<=\[)(.*?)(?=\])] (.*)');
 
     if (!issueTitleRegex.test(issueTitle)) {
@@ -23,6 +25,9 @@ export async function run() {
 
     let bundleDir = matches[0].values[0];
     let issueSummary = matches[1].values[0];
+
+    core.info("Bundle directory is: " + bundleDir);
+    core.info("Issue summary is: " + issueSummary);
 
     let workspacePath = <string>process.env.GITHUB_WORKSPACE;
     let wd = path.join(workspacePath, bundleDir);
@@ -35,14 +40,17 @@ export async function run() {
     let issuesFile = path.join(wd, "ISSUES.md");
     let issueLine = `- [${issueSummary}](${issueUrl})`;
 
-    if (issueAction == "opened"){
+    if (issueAction == "opened") {
+      core.info("Adding issue to issues file...");
       fs.appendFileSync(issuesFile, "\n");
       fs.appendFileSync(issuesFile, issueLine);
     } else if (issueAction == "closed") {
+      core.info("Adding strikethrough to issue in issues file...");
       let contents = fs.readFileSync(issuesFile, "utf8");
       contents = contents.replace(issueLine, `~~${issueLine}~~`);
       fs.writeFileSync(issuesFile, contents);
     } else if (issueAction == "reopened") {
+      core.info("Removing strikethrough from issue in issues file...");
       let contents = fs.readFileSync(issuesFile, "utf8");
       contents = contents.replace(`~~${issueLine}~~`, issueLine);
       fs.writeFileSync(issuesFile, contents);
