@@ -3,7 +3,7 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { parseIssueTitle } from './functions';
 
-export async function run() {
+export function run() {
   try {
 
     let issueTitle = <string>core.getInput('issue_title');
@@ -53,8 +53,8 @@ export async function run() {
     core.setOutput("quickstart_solution_path", bundleDir);
 
   } catch (error) {
-    throw error;
+    core.setFailed(error.message)
   }
 }
 
-run().catch(error => core.setFailed(error.message));
+run();
